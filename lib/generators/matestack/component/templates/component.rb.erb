@@ -1,0 +1,21 @@
+class <%= @component_class_name %> < Matestack::Ui::Component
+  # required :some_required_property
+  # optional :some_optional_property
+
+  def prepare
+  end
+
+  def render?
+    true
+  end
+
+  def response
+    my_partial
+  end
+
+  private
+
+  def my_partial
+    plain 'hello from partial!'
+  end
+end

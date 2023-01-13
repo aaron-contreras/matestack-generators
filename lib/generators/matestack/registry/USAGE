@@ -1,0 +1,15 @@
+Description:
+    Generates a Matestack component registry and a set of base classes
+    in order to share the registered components among your Matestack
+    Layouts, Pages and Components. You can also bundle shared setup/methods
+    in these.
+
+Example:
+    bin/rails generate matestack:base_classes
+
+    This will create:
+        app/matestack/components/registry.rb
+        app/matestack/application_layout.rb
+        app/matestack/application_page.rb
+        app/matestack/application_component.rb
+        app/matestack/application_vue_js_component.rb
