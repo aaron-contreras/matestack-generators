@@ -32,7 +32,7 @@ module Matestack
       template @component_config[:template_file_path], @component_config[:file_path]
     end
 
-    def add_to_registry
+    def register_component_helper_method
       if options[:registry] && File.exist?(REGISTRY_DEFAULT_FILE_PATH)
         inject_into_file 'app/matestack/components/registry.rb', after: "module Components::Registry\n" do
           <<-RUBY.gsub(/^ {12}/, '')
