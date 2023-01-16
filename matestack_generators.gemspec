@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Aaron Contreras"]
   spec.email = ["aaronlcaq@gmail.com"]
 
-  spec.summary = "Write a short summary, because RubyGems requires one."
-  spec.description = "Write a longer description or delete this line."
+  spec.summary = "A collection of Ruby on Rails generators to boost your productivity on your Matestack-based app."
+  spec.description = "Matestack is an incredible framework. It brings developer happiness back into the equation when working on the full-stack on a Ruby on Rails application. If it wasn't already good enough, this gem brings with it a set of generators - a fantastic feature of Rails applicactions - in order to boost your productivity while working on Matestack and multiplying the developer-happiness effect we all love."
   spec.homepage = "https://docs.matestack.io"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.7.2"
