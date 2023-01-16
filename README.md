@@ -1,24 +1,24 @@
 # MatestackGenerators
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/matestack_generators`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem was born out of a conflicting personal hybrid of being a lazy developer and wanting to keep standards of code cleanliness and best practices while developing on Matestack-based applications on my day-to-day. I find myself constantly repeating the same workflow while developeing a new feature or page. To solve this, I've started to leverage one of the beauties of the Ruby on Rails framework: [Generators](https://guides.rubyonrails.org/generators.html) ❤️
 
 ## Installation
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+1. Add to your Matestack Rails app's by copying the following line to your Gemfile
 
-Install the gem and add to the application's Gemfile by executing:
+```
+gem 'matestack_generators', git: "https://github.com/aaron-contreras/matestack-generators"
+```
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+2. Run bundle install
 
-If bundler is not being used to manage dependencies, install the gem by executing:
-
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+```
+bundle install
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+TODO: Fill up with Usage or some reference to the actual USAGE files inside each of the generators.
 
 ## Development
 
