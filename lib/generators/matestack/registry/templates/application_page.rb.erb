@@ -1,3 +1,3 @@
-class <%= @core_config.dig(:application_component, :page) %> < Matestack::Ui::Page
+class <%= @core_config.dig(:application_page, :klass) %> < Matestack::Ui::Page
   include Components::Registry
 end

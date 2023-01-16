@@ -1,3 +1,3 @@
-class <%= @core_config.dig(:application_component, :application_vue_js_component) %> < Matestack::Ui::VueJsComponent
+class <%= @vue_js_config.dig(:application_vue_js_component, :klass) %> < Matestack::Ui::VueJsComponent
   include Components::Registry
 end

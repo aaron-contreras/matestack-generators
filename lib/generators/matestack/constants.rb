@@ -4,7 +4,6 @@ module Matestack
     MATESTACK_DIRECTORY = 'app/matestack'
     REGISTRY_DIRECTORY = 'components'
     BASE_CLASS_DIRECTORY = './'
-    REGISTRY_DIRECTORY = 'components'
     TEMPLATE_FILE_TYPE = '.rb.erb'
     RUBY_FILE_TYPE = '.rb'
 

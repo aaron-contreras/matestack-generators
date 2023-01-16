@@ -18,8 +18,8 @@ module Matestack
     def build_class_names
       @registry_config = {}.tap do |config|
         config[:template_file_path] = "#{REGISTRY_IDENTIFIER}#{TEMPLATE_FILE_TYPE}"
-        config[:file_path] = "#{REGISTRY_DIRECTORY}/#{REGISTRY_IDENTIFIER}"
-        config[:klass] = [REGISTRY_DIRECTORY, REGISTRY_IDENTIFIER].map(&:camelcase).join('::')
+        config[:file_path] = "#{MATESTACK_DIRECTORY}/#{REGISTRY_DIRECTORY}/#{REGISTRY_IDENTIFIER}#{RUBY_FILE_TYPE}"
+        config[:klass] = [REGISTRY_DIRECTORY, REGISTRY_IDENTIFIER].map(&:to_s).map(&:camelcase).join('::')
       end
 
       if options[:core]
@@ -28,7 +28,7 @@ module Matestack
             config[identifier] = {
               template_file_path: "#{identifier}#{TEMPLATE_FILE_TYPE}",
               file_path: "#{MATESTACK_DIRECTORY}/#{identifier}#{RUBY_FILE_TYPE}",
-              klass: identifier.camelcase
+              klass: identifier.to_s.camelcase
             }
           end
         end
@@ -40,7 +40,7 @@ module Matestack
             config[identifier] = {
               template_file_path: "#{identifier}#{TEMPLATE_FILE_TYPE}",
               file_path: "#{MATESTACK_DIRECTORY}/#{identifier}#{RUBY_FILE_TYPE}",
-              klass: identifier.camelcase
+              klass: identifier.to_s.camelcase
             }
           end
         end
@@ -53,16 +53,16 @@ module Matestack
 
     def generate_core_base_classes
       if options[:core]
-        @core_config.each do |config|
-          template config[:template_file_path], config[:file_path]
+        @core_config.each do |_identifier, config|
+          template config.dig(:template_file_path), config.dig(:file_path)
         end
       end
     end
 
     def generate_vue_js_base_classes
       if options[:vue_js]
-        @vue_js_config.each do |config|
-          template config[:template_file_path], config[:file_path]
+        @vue_js_config.each do |_identifier, config|
+          template config.dig(:template_file_path), config.dig(:file_path)
         end
       end
     end
