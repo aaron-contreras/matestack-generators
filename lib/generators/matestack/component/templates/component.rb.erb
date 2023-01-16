@@ -1,4 +1,5 @@
 class <%= @component_config[:klass] %> < <%= @component_config[:base_klass] %>
+  <%- if options[:full] -%>
   # required :some_required_property
   # optional :some_optional_property
 
@@ -9,13 +10,16 @@ class <%= @component_config[:klass] %> < <%= @component_config[:base_klass] %>
     true
   end
 
+  <%- end -%>
   def response
     my_partial
   end
+  <%- if options[:full] -%>
 
   private
 
   def my_partial
-    plain "I'm your new component"
+    paragraph "Hello from <%= @component_config[:klass] %>"
   end
+  <%- end -%>
 end

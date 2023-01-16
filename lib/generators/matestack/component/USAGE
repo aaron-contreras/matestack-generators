@@ -20,6 +20,10 @@ Description:
     To inherit directly from Matestack::Ui::Component instead, invoke the
     generator with --no-base.
 
+    You may optionally invoke the generator with the --full flag in order to
+    build a component with a #render?, #prepare, sample required/optional
+    injectable property declarations and a dummy partial.
+
 Example:
     bin/rails generate matestack:component card
 
