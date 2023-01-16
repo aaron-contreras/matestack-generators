@@ -2,26 +2,35 @@ Description:
     Generates a Matestack Component under app/matestack/components with
     the specified namespace and directory structure provided in NAME.
 
-    By default the component will be added to the default component registry if
-    it exists under app/matestack/components/registry.rb.
+    By default the component will be added to the Component Registry if
+    it exists under app/matestack/components/registry.rb. This is the path
+    where the Matestack generator `bin/rails generate matestack:registry`
+    would create the registry module in.
 
     If you don't wish to add this component to the registry, invoke the generator
     with --no-registry.
 
-    By default the component class will inherit from ApplicationComponent, the
-    suggested base class to inherit from in order to share the component registry
-    throughout your application.
+    By default the component class will inherit from ApplicationComponent (the
+    recommended base class to inherit your Matestack::Ui::Component(s) from in
+    order to share the Component Registry throughout your application) if it
+    exists under app/matestack/application_component.rb. This is the path where
+    the Matestack generator `bin/rails generate matestack:registry --core` would
+    create the ApplicationComponent class in.
 
     To inherit directly from Matestack::Ui::Component instead, invoke the
-    generator with --no-application-component.
+    generator with --no-base.
 
 Example:
     bin/rails generate matestack:component card
 
     This will create:
         app/matestack/components/card.rb
+    And if the registry exists, modify:
+        app/matestack/components/registry.rb
 
     bin/rails generate matestack:component admin/dashboard/card
 
     This will create:
         app/matestack/components/admin/dashboard/card.rb
+    And if the registry exists, modify:
+        app/matestack/components/registry.rb
