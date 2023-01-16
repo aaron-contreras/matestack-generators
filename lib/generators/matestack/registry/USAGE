@@ -2,10 +2,14 @@ Description:
     Generates a Matestack component registry module that can be
     included in your other Ruby files throughout your app.
     
-    Optionally (and recommended), using the --with-base-classes
-    flag you're able to generate a set of base classes in order
-    to share the registry among your Matestack Layouts, Pages
-    and Components by inheriting from them.
+    It is recommened to share this registry throughout your application
+    by including it into a set of base classes from which you inherit your
+    Matestack classes (Components, Pages, Layouts) from.
+
+    To create these, invoke the generator with:
+        --core to generate the base classes for matestack-ui-core
+        --vue-js to generate the base classes for matestack-ui-vue-js
+        --core --vue-js to generate all
 
 Example:
     bin/rails generate matestack:registry
@@ -14,7 +18,23 @@ Example:
         app/matestack/components/registry.rb
 
 Example:
-    bin/rails generate matestack:registry --with-base-classes
+    bin/rails generate matestack:registry --core
+
+    This will create:
+        app/matestack/components/registry.rb
+        app/matestack/application_layout.rb
+        app/matestack/application_page.rb
+        app/matestack/application_component.rb
+
+Example:
+    bin/rails generate matestack:registry --vue-js
+
+    This will create:
+        app/matestack/components/registry.rb
+        app/matestack/application_vue_js_component.rb
+
+Example:
+    bin/rails generate matestack:registry --core --vue-js
 
     This will create:
         app/matestack/components/registry.rb

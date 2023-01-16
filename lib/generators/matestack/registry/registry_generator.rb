@@ -1,58 +1,69 @@
 # frozen_string_literal: true
 
 require 'rails/generators/base'
+
 require_relative '../constants'
 
 module Matestack
   class RegistryGenerator < Rails::Generators::Base
     source_root File.expand_path('templates', __dir__)
-    class_option :base_classes, type: :boolean, default: false, desc: "Generate Matestack base classes to inherit from and share the component registry"
+
+    class_option :core, type: :boolean, default: false,
+                        desc: 'Include matestack-ui-core base classes to share the component registry'
+    class_option :vue_js, type: :boolean, default: false,
+                          desc: 'Include matestack-ui-vue-js base classes to share the component registry'
+
     include Constants
 
-    REGISTRY_DIRECTORY = 'components'
-    REGISTRY_FILE_NAME = 'registry'
-    APPLICATION_LAYOUT_FILE_NAME = 'application_layout'
-    APPLICATION_PAGE_FILE_NAME = 'application_page'
-    APPLICATION_COMPONENT_FILE_NAME = 'application_component'
-    APPLICATION_VUE_JS_COMPONENT_FILE_NAME = 'application_vue_js_component'
-
     def build_class_names
-      @registry_class_name = [REGISTRY_DIRECTORY.camelcase, REGISTRY_FILE_NAME.camelcase].join('::')
-      if options[:base_classes]
-        @application_layout_class_name = APPLICATION_LAYOUT_FILE_NAME.camelcase
-        @application_page_class_name = APPLICATION_PAGE_FILE_NAME.camelcase
-        @application_component_class_name = APPLICATION_COMPONENT_FILE_NAME.camelcase
-        @application_vue_jscomponent_class_name = APPLICATION_VUE_JS_COMPONENT_FILE_NAME.camelcase
+      @registry_config = {}.tap do |config|
+        config[:template_file_path] = "#{REGISTRY_IDENTIFIER}#{TEMPLATE_FILE_TYPE}"
+        config[:file_path] = "#{REGISTRY_DIRECTORY}/#{REGISTRY_IDENTIFIER}"
+        config[:klass] = [REGISTRY_DIRECTORY, REGISTRY_IDENTIFIER].map(&:camelcase).join('::')
+      end
+
+      if options[:core]
+        @core_config = {}.tap do |config|
+          CORE_IDENTIFIERS.each do |identifier|
+            config[identifier] = {
+              template_file_path: "#{identifier}#{TEMPLATE_FILE_TYPE}",
+              file_path: "#{MATESTACK_DIRECTORY}/#{identifier}#{RUBY_FILE_TYPE}",
+              klass: identifier.camelcase
+            }
+          end
+        end
+      end
+
+      if options[:vue_js]
+        @vue_js_config = {}.tap do |config|
+          VUE_JS_IDENTIFIERS.each do |identifier|
+            config[identifier] = {
+              template_file_path: "#{identifier}#{TEMPLATE_FILE_TYPE}",
+              file_path: "#{MATESTACK_DIRECTORY}/#{identifier}#{RUBY_FILE_TYPE}",
+              klass: identifier.camelcase
+            }
+          end
+        end
       end
     end
 
     def generate_registry
-      template "#{REGISTRY_FILE_NAME}.rb.erb", "#{MATESTACK_DIRECTORY}/#{REGISTRY_DIRECTORY}/#{REGISTRY_FILE_NAME}.rb"
+      template @registry_config[:template_file_path], @registry_config[:file_path]
     end
 
-    def generate_application_layout
-      if options[:base_classes]
-        template "#{APPLICATION_LAYOUT_FILE_NAME}.rb.erb", "#{MATESTACK_DIRECTORY}/#{APPLICATION_LAYOUT_FILE_NAME}.rb"
+    def generate_core_base_classes
+      if options[:core]
+        @core_config.each do |config|
+          template config[:template_file_path], config[:file_path]
+        end
       end
     end
 
-    def generate_application_layout
-      if options[:base_classes]
-        template "#{APPLICATION_LAYOUT_FILE_NAME}.rb.erb", "#{MATESTACK_DIRECTORY}/#{APPLICATION_LAYOUT_FILE_NAME}.rb"
-      end
-    end
-
-    def generate_application_component
-      if options[:base_classes]
-        template "#{APPLICATION_COMPONENT_FILE_NAME}.rb.erb",
-                 "#{MATESTACK_DIRECTORY}/#{APPLICATION_COMPONENT_FILE_NAME}.rb"
-      end
-    end
-
-    def generate_application_vue_js_component
-      if options[:base_classes]
-        template "#{APPLICATION_VUE_JS_COMPONENT_FILE_NAME}.rb.erb",
-                 "#{MATESTACK_DIRECTORY}/#{APPLICATION_VUE_JS_COMPONENT_FILE_NAME}.rb"
+    def generate_vue_js_base_classes
+      if options[:vue_js]
+        @vue_js_config.each do |config|
+          template config[:template_file_path], config[:file_path]
+        end
       end
     end
   end
