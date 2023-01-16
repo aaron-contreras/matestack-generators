@@ -1,10 +1,11 @@
 Description:
-    Generates a Matestack component registry module that can be included in
-    your other Ruby files throughout your app.
+    Generates a Matestack component registry module that can be
+    included in your other Ruby files throughout your app.
     
-    Optionally (and recommended), using the --with-base-classes flag you're
-    able to generate a set of base classes in order to share the registry among
-    your Matestack Layouts, Pages and Components by inheriting from these base classes.
+    Optionally (and recommended), using the --with-base-classes
+    flag you're able to generate a set of base classes in order
+    to share the registry among your Matestack Layouts, Pages
+    and Components by inheriting from them.
 
 Example:
     bin/rails generate matestack:registry

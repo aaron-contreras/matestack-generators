@@ -1,4 +1,4 @@
-class <%= @component_class_name %> < Matestack::Ui::Component
+class <%= @component_class_name %> < <%= @component_base_class_name %>
   # required :some_required_property
   # optional :some_optional_property
 
@@ -16,6 +16,6 @@ class <%= @component_class_name %> < Matestack::Ui::Component
   private
 
   def my_partial
-    plain 'hello from partial!'
+    plain "I'm your new component"
   end
 end

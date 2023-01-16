@@ -6,7 +6,7 @@ require_relative '../constants'
 module Matestack
   class RegistryGenerator < Rails::Generators::Base
     source_root File.expand_path('templates', __dir__)
-    class_option :base_classes, type: :boolean, default: false
+    class_option :base_classes, type: :boolean, default: false, desc: "Generate Matestack base classes to inherit from and share the component registry"
     include Constants
 
     REGISTRY_DIRECTORY = 'components'
