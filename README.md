@@ -18,7 +18,8 @@ bundle install
 
 ## Usage
 
-TODO: Fill up with Usage or some reference to the actual USAGE files inside each of the generators.
+1. [Component Registry](./lib/generators/matestack/registry/USAGE)
+2. [Matestack::Ui::Component](./lib/generators/matestack/component/USAGE)
 
 ## Development
 
