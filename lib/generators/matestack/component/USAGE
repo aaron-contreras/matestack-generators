@@ -2,12 +2,17 @@ Description:
     Generates a Matestack Component under app/matestack/components with
     the specified namespace and directory structure provided in NAME.
 
+    e.g.
+    - NAME set to "demo", sets the Component's class name to Components::Demo.
+    - NAME set to "admin/pages/orders/index" sets the Page's class name
+      to Componenets::Admin::Pages::Orders::Index
+
     By default the component will be added to the Component Registry if
     it exists under app/matestack/components/registry.rb. This is the path
     where the Matestack generator `bin/rails generate matestack:registry`
     would create the registry module in.
 
-    If you don't wish to add this component to the registry, invoke the generator
+    If you don't wish to add your component to the registry, invoke the generator
     with --no-registry.
 
     By default the component class will inherit from ApplicationComponent (the
@@ -32,9 +37,16 @@ Example:
     And if the registry exists, modify:
         app/matestack/components/registry.rb
 
+
     bin/rails generate matestack:component admin/dashboard/card
 
     This will create:
         app/matestack/components/admin/dashboard/card.rb
     And if the registry exists, modify:
         app/matestack/components/registry.rb
+
+
+    bin/rails generate matestack:component admin/dashboard/card --no-registry
+    
+    This will create:
+        app/matestack/components/admin/dashboard/card.rb
