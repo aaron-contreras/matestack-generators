@@ -9,9 +9,9 @@ module Matestack
     source_root File.expand_path('templates', __dir__)
 
     class_option :core, type: :boolean, default: false,
-                        desc: 'Include matestack-ui-core base classes to share the component registry'
+                        desc: 'Include matestack-ui-core base classes to share the Component Registry'
     class_option :vue_js, type: :boolean, default: false,
-                          desc: 'Include matestack-ui-vue-js base classes to share the component registry'
+                          desc: 'Include matestack-ui-vue-js base classes to share the Component Registry'
 
     include Constants
 
