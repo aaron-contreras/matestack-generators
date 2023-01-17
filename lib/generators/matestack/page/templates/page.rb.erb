@@ -1,0 +1,22 @@
+class <%= @page_config[:klass] %> < <%= @page_config[:base_klass] %>
+  <%- unless options[:full] -%>
+  def response
+  end
+  <%- else -%>
+  #required :some_required_property
+  #optional :some_optional_property
+
+  def prepare
+  end
+
+  def response
+    my_partial
+  end
+
+  private
+
+  def my_partial
+    paragraph "This is <%= @page_config[:klass] %>"
+  end
+  <%- end -%>
+end

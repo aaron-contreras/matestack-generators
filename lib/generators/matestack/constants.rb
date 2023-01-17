@@ -8,6 +8,8 @@ module Matestack
 
     REGISTRY_DEFAULT_FILE_PATH = "#{COMPONENT_DIRECTORY}/registry.rb"
     APPLICATION_COMPONENT_DEFAULT_FILE_PATH = "#{MATESTACK_DIRECTORY}/application_component.rb"
+    APPLICATION_PAGE_DEFAULT_FILE_PATH = "#{MATESTACK_DIRECTORY}/application_page.rb"
+
 
     TEMPLATE_FILE_TYPE = '.rb.erb'
     RUBY_FILE_TYPE = '.rb'

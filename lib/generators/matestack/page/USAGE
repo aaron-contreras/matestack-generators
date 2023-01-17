@@ -1,0 +1,34 @@
+Description:
+    Generates a Matestack Page under app/matestack with
+    the specified class namespace and directory structure provided in NAME.
+
+    e.g.
+    - NAME set to "demo", sets the Page's class name to Demo.
+    - NAME set to "admin/pages/orders/index" sets the Page's class name
+      to Admin::Pages::Orders::Index
+
+    By default the page class will inherit from ApplicationPage (the
+    recommended base class to inherit your Matestack::Ui::Page(s) from in
+    order to share the Component Registry throughout your application) if it
+    exists under app/matestack/application_page.rb. This is the path where
+    the Matestack generator `bin/rails generate matestack:registry --core` would
+    create the ApplicationPage class in.
+
+    To inherit directly from Matestack::Ui::Page instead, invoke the
+    generator with --no-base.
+
+    You may optionally invoke the generator with the --full flag in order to
+    build a page with a #prepare, sample required/optional
+    injectable property declarations and a dummy partial.
+
+Example:
+    bin/rails generate matestack:page demo
+
+    This will create:
+        app/matestack/demo.rb
+
+    bin/rails generate matestack:page admin/pages/products/index
+
+    This will create:
+        app/matestack/admin/pages/products/index
+
