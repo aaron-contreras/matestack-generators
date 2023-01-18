@@ -1,10 +1,15 @@
-class <%= @component_config[:klass] %> < <%= @component_config[:base_klass] %>
-  <%- unless options[:full] -%>
+class <%= @ruby_component_config[:klass] %> < <%= @ruby_component_config[:base_klass] %>
   vue_name "<%= @vue_js_component_config[:registry_name] %>"
-  # WIP: Set up vue_js_component_config
+
+  <%- unless options[:full] -%>
   def response
     div do
-      plain "This is {{ vc.componentName }}"
+      plain "This is <%= @ruby_component_config[:klass] %>"
+    end
+  end
+
+  def vue_props
+    {}.tap do |config|
     end
   end
   <%- else -%>
@@ -19,13 +24,20 @@ class <%= @component_config[:klass] %> < <%= @component_config[:base_klass] %>
   end
 
   def response
-    my_partial
+    div do
+      my_partial
+    end
+  end
+
+  def vue_props
+    {}.tap do |config|
+    end
   end
 
   private
 
   def my_partial
-    paragraph "This is <%= @component_config[:klass] %>"
+    paragraph "This is <%= @ruby_component_config[:klass] %>"
   end
   <%- end -%>
 end

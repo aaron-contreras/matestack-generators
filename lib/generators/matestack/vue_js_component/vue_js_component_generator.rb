@@ -14,7 +14,7 @@ module Matestack
 
     include Constants
 
-    def setup_ruby_ruby_component_config
+    def setup_generator_config
       @ruby_component_config = {}.tap do |config|
         config[:template_file_path] = "ruby_component#{TEMPLATE_FILE_TYPE}"
         config[:file_path] = "#{COMPONENT_DIRECTORY}/#{name.underscore}#{RUBY_FILE_TYPE}"
@@ -26,16 +26,21 @@ module Matestack
                               end
         config[:helper_name] = name.split('/').map(&:underscore).join('_') if options[:registry]
       end
+
+      @vue_js_component_config = {}.tap do |config|
+        config[:template_file_path] = "vue_js_component#{VUE_JS_TEMPLATE_FILE_TYPE}"
+        config[:file_path] = "#{COMPONENT_DIRECTORY}/#{name.underscore}#{JAVASCRIPT_FILE_TYPE}"
+        config[:component_name] = name.gsub('/', '_').camelize(:lower)
+        config[:registry_name] = name.gsub(/\/|_/, '-')
+      end
     end
 
     def generate_ruby_matestack_component
       template @ruby_component_config[:template_file_path], @ruby_component_config[:file_path]
     end
 
-    def setup_vue_js_ruby_component_config
-    end
-
     def generate_vue_js_matestack_component
+      template @vue_js_component_config[:template_file_path], @vue_js_component_config[:file_path]
     end
 
     def register_component_helper_method
