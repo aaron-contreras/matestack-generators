@@ -1,0 +1,19 @@
+class <%= @layout_config[:klass] %> < <%= @layout_config[:base_klass] %>
+  <%- unless options[:full] -%>
+  def response
+  end
+  <%- else -%>
+  def prepare
+  end
+
+  def response
+    my_partial
+  end
+
+  private
+
+  def my_partial
+    paragraph "This is <%= @layout_config[:klass] %>"
+  end
+  <%- end -%>
+end

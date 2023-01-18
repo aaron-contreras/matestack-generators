@@ -1,0 +1,32 @@
+Description:
+    Generates a Matestack Layout under app/matestack with
+    the specified class namespace and directory structure provided in NAME.
+
+    e.g.
+    - NAME set to "demo", sets the Layouts's class name to Demo.
+    - NAME set to "admin/pages/orders/index" sets the Layout's class name
+      to Admin::Pages::Orders::Index
+
+    By default the Layout class will inherit from ApplicationLayout (the
+    recommended base class to inherit your Matestack::Ui::Layout(s) from in
+    order to share the Component Registry throughout your application) if it
+    exists under app/matestack/application_layout.rb. This is the path where
+    the Matestack generator `bin/rails generate matestack:registry --core` would
+    create the ApplicationLayout class in.
+
+    To inherit directly from Matestack::Ui::Layout instead, invoke the
+    generator with --no-base.
+
+    You may optionally invoke the generator with the --full flag in order to
+    build a page with a #prepare, and a dummy partial.
+
+Example:
+    bin/rails generate matestack:layout demo/layout
+
+    This will create:
+        app/matestack/demo/layout.rb
+
+    bin/rails generate matestack:layout admin/pages/products/layout
+
+    This will create:
+        app/matestack/admin/pages/products/layout.rb
