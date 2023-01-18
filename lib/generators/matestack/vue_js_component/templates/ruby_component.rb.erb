@@ -1,0 +1,31 @@
+class <%= @component_config[:klass] %> < <%= @component_config[:base_klass] %>
+  <%- unless options[:full] -%>
+  vue_name "<%= @vue_js_component_config[:registry_name] %>"
+  # WIP: Set up vue_js_component_config
+  def response
+    div do
+      plain "This is {{ vc.componentName }}"
+    end
+  end
+  <%- else -%>
+  # required :some_required_property
+  # optional :some_optional_property
+
+  def prepare
+  end
+
+  def render?
+    true
+  end
+
+  def response
+    my_partial
+  end
+
+  private
+
+  def my_partial
+    paragraph "This is <%= @component_config[:klass] %>"
+  end
+  <%- end -%>
+end
