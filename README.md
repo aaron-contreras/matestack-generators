@@ -20,6 +20,8 @@ bundle install
 
 1. [Component Registry](./lib/generators/matestack/registry/USAGE)
 2. [Matestack::Ui::Component](./lib/generators/matestack/component/USAGE)
+3. [Matestack::Ui::Page](./lib/generators/matestack/page/USAGE)
+4. [Matestack::Ui::Layout](./lib/generators/matestack/layout/USAGE)
 
 ## Development
 
