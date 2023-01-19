@@ -23,6 +23,7 @@ bundle install
 3. [Matestack::Ui::Page](./lib/generators/matestack/page/USAGE)
 4. [Matestack::Ui::Layout](./lib/generators/matestack/layout/USAGE)
 5. [Matestack::Ui::VueJsComponent](./lib/generators/matestack/vue_js_component/USAGE)
+
 and more to come...
 
 ## Development
