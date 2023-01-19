@@ -31,7 +31,7 @@ module Matestack
         config[:template_file_path] = "vue_js_component#{VUE_JS_TEMPLATE_FILE_TYPE}"
         config[:file_path] = "#{COMPONENT_DIRECTORY}/#{name.underscore}#{JAVASCRIPT_FILE_TYPE}"
         config[:component_name] = name.gsub('/', '_').camelize(:lower)
-        config[:registry_name] = name.gsub(/\/|_/, '-')
+        config[:registry_name] = name.gsub(%r{/|_}, '-')
       end
     end
 
@@ -51,6 +51,32 @@ module Matestack
                 #{@ruby_component_config[:klass]}.call(text, options, &block)
               end
           RUBY
+        end
+      end
+    end
+
+    def register_on_package_manager
+      if File.exist?('config/importmap.rb')
+        append_to_file 'config/importmap.rb' do
+          "pin \"#{@vue_js_component_config[:registry_name]}\", to: \"#{@vue_js_component_config[:file_path]}\""
+        end
+
+        inject_into_file 'app/javascript/packs/application.js', before: /createApp/ do
+          <<~JS
+            import #{@vue_js_component_config[:component_name]} from '../../../#{@vue_js_component_config[:file_path]}'
+
+          JS
+        end
+
+        app_instance_name = File.readlines(Rails.root + 'app/javascript/application.js').find do |l|
+          l.match?(/^const.*createApp/)
+        end.split('=').map(&:strip).first.split('').last
+
+        inject_into_file 'app/javascript/application.js', after: /^const.*createApp/ do
+          <<~JS
+
+            #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
+          JS
         end
       end
     end
