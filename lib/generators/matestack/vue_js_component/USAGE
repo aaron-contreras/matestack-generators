@@ -1,11 +1,18 @@
 Description:
-    Generates a Matestack Component under app/matestack/components with
-    the specified namespace and directory structure provided in NAME.
+    Generates a Matestack VueJs Component's Ruby and VueJs files
+    under app/matestack/components with the specified namespace
+    and directory structure provided in NAME.
 
     e.g.
-    - NAME set to "demo", sets the Component's class name to Components::Demo.
-    - NAME set to "admin/pages/orders/index" sets the Page's class name
-      to Componenets::Admin::Pages::Orders::Index
+    - NAME set to "demo", sets the Ruby component's class name to
+        "Components::Demo", sets vue-name to "demo" and the VueJs
+        component's name to "demo".
+
+    - NAME set to "admin/orders/currency_converter" sets the Ruby
+        component's class name to
+        "Components::Admin::Orders::CurrencyConverter", sets vue-name
+        to "admin-orders-currency-converter" and the VueJs component's
+        name to "adminOrdersCurrencyConverter".
 
     By default the component will be added to the Component Registry if
     it exists under app/matestack/components/registry.rb. This is the path
@@ -15,14 +22,14 @@ Description:
     If you don't wish to add your component to the registry, invoke the generator
     with --no-registry.
 
-    By default the component class will inherit from ApplicationComponent (the
-    recommended base class to inherit your Matestack::Ui::Component(s) from in
+    By default the component class will inherit from ApplicationVueJsComponent (the
+    recommended base class to inherit your Matestack::Ui::VueJsComponent(s) from in
     order to share the Component Registry throughout your application) if it
-    exists under app/matestack/application_component.rb. This is the path where
-    the Matestack generator `bin/rails generate matestack:registry --core` would
-    create the ApplicationComponent class in.
+    exists under app/matestack/application_vue_js_component.rb. This is the path
+    where the Matestack generator `bin/rails generate matestack:registry --vue-js`
+    would create the ApplicationVueJsComponent class in.
 
-    To inherit directly from Matestack::Ui::Component instead, invoke the
+    To inherit directly from Matestack::Ui::VueJsComponent instead, invoke the
     generator with --no-base.
 
     You may optionally invoke the generator with the --full flag in order to
@@ -30,18 +37,20 @@ Description:
     injectable property declarations and a dummy partial.
 
 Example:
-    bin/rails generate matestack:component card
+    bin/rails generate matestack:vue_js_component card
 
     This will create:
         app/matestack/components/card.rb
+        app/matestack/components/card.js
     And if the registry exists, modify:
         app/matestack/components/registry.rb
 
 
-    bin/rails generate matestack:component admin/dashboard/card
+    bin/rails generate matestack:component admin/dashboard/card_cell
 
     This will create:
-        app/matestack/components/admin/dashboard/card.rb
+        app/matestack/components/admin/dashboard/card_cell.rb
+        app/matestack/components/admin/dashboard/card_cell.js
     And if the registry exists, modify:
         app/matestack/components/registry.rb
 
@@ -50,3 +59,4 @@ Example:
     
     This will create:
         app/matestack/components/admin/dashboard/card.rb
+        app/matestack/components/admin/dashboard/card.js
