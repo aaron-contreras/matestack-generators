@@ -8,7 +8,7 @@ module Matestack
     source_root File.expand_path('templates', __dir__)
 
     argument :name, type: :string
-    class_option :base, type: :boolean, default: true, desc: 'Inherit from ApplicationComponent'
+    class_option :base, type: :boolean, default: true, desc: 'Inherit from ApplicationVueJsComponent'
     class_option :registry, type: :boolean, default: true, desc: 'Add to the Component Registry'
     class_option :full, type: :boolean, default: false, desc: 'Generate a "fully-featured" component'
 
