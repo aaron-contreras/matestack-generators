@@ -61,7 +61,25 @@ module Matestack
           "pin \"#{@vue_js_component_config[:registry_name]}\", to: \"#{@vue_js_component_config[:file_path]}\""
         end
 
-        inject_into_file 'app/javascript/packs/application.js', before: /createApp/ do
+        inject_into_file 'app/javascript/packs/application.js', before: /^const.*createApp/ do
+          <<~JS
+            import #{@vue_js_component_config[:component_name]} from '#{@vue_js_component_config[:registry_name]}'
+
+          JS
+        end
+
+        app_instance_name = File.readlines(Rails.root + 'app/javascript/application.js').find do |l|
+          l.match?(/^const.*createApp/)
+        end.split('=').map(&:strip).first.split('').last
+
+        inject_into_file 'app/javascript/application.js', after: /^const.*createApp/ do
+          <<~JS
+
+            #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
+          JS
+        end
+      elsif File.exist?('app/javascript/packs/application.js')
+        inject_into_file 'app/javascript/packs/application.js', before: /^const.*createApp/ do
           <<~JS
             import #{@vue_js_component_config[:component_name]} from '../../../#{@vue_js_component_config[:file_path]}'
 
@@ -72,7 +90,7 @@ module Matestack
           l.match?(/^const.*createApp/)
         end.split('=').map(&:strip).first.split('').last
 
-        inject_into_file 'app/javascript/application.js', after: /^const.*createApp/ do
+        inject_into_file 'app/javascript/packs/application.js', after: /^const.*createApp/ do
           <<~JS
 
             #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
