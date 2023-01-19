@@ -1,6 +1,6 @@
 # MatestackGenerators
 
-This gem was born out of a conflicting personal hybrid of being a lazy developer and wanting to keep standards of code cleanliness and best practices while developing on Matestack-based applications on my day-to-day. I find myself constantly repeating the same workflow while developing a new feature or refactoring some code. To solve this, I've started to leverage one of the beauties of the Ruby on Rails framework: [Generators](https://guides.rubyonrails.org/generators.html) ❤️
+This gem was born out of a conflicting personal hybrid of being a lazy developer and wanting to keep standards of code cleanliness and best practices while developing on Matestack-based applications on my day-to-day. I find myself constantly repeating some Matestack workflow while developing a new feature or refactoring some code. To solve this, I've started to leverage one of the beauties of the Ruby on Rails framework: [Generators](https://guides.rubyonrails.org/generators.html) ❤️
 
 ## Installation
 
@@ -23,6 +23,7 @@ bundle install
 3. [Matestack::Ui::Page](./lib/generators/matestack/page/USAGE)
 4. [Matestack::Ui::Layout](./lib/generators/matestack/layout/USAGE)
 5. [Matestack::Ui::VueJsComponent](./lib/generators/matestack/vue_js_component/USAGE)
+and more to come...
 
 ## Development
 
