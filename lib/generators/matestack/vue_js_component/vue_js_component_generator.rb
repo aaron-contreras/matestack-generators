@@ -57,11 +57,19 @@ module Matestack
 
     def register_on_package_manager
       if File.exist?('config/importmap.rb')
-        append_to_file 'config/importmap.rb' do
-          "pin \"#{@vue_js_component_config[:registry_name]}\", to: \"#{@vue_js_component_config[:file_path]}\""
+        unless File.readlines('config/importmap.rb').last.end_with?("\n")
+          File.open('config/importmap.rb', 'a') do |file|
+            file.puts
+          end
         end
 
-        inject_into_file 'app/javascript/packs/application.js', before: /^const.*createApp/ do
+        append_to_file 'config/importmap.rb' do
+          <<~PIN
+            pin \"#{@vue_js_component_config[:registry_name]}\", to: \"#{@vue_js_component_config[:file_path]}\"
+          PIN
+        end
+
+        inject_into_file 'app/javascript/application.js', before: /^const.*createApp/ do
           <<~JS
             import #{@vue_js_component_config[:component_name]} from '#{@vue_js_component_config[:registry_name]}'
 
@@ -70,7 +78,7 @@ module Matestack
 
         app_instance_name = File.readlines(Rails.root + 'app/javascript/application.js').find do |l|
           l.match?(/^const.*createApp/)
-        end.split('=').map(&:strip).first.split('').last
+        end.split('=').map(&:strip).first.split(' ').last
 
         inject_into_file 'app/javascript/application.js', after: /^const.*createApp/ do
           <<~JS
@@ -86,12 +94,13 @@ module Matestack
           JS
         end
 
-        app_instance_name = File.readlines(Rails.root + 'app/javascript/application.js').find do |l|
+        app_instance_name = File.readlines(Rails.root + 'app/javascript/packs/application.js').find do |l|
           l.match?(/^const.*createApp/)
-        end.split('=').map(&:strip).first.split('').last
+        end.split('=').map(&:strip).first.split(' ').last
 
         inject_into_file 'app/javascript/packs/application.js', after: /^const.*createApp/ do
           <<~JS
+
 
             #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
           JS
