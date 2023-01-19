@@ -36,14 +36,26 @@ Description:
     build a component with a #render?, #prepare, sample required/optional
     injectable property declarations and a dummy partial.
 
+    The generator automatically detects your Rails project is running on Webpacker
+    or Importmap by the presence of config/importmap.rb or files under an
+    app/javascript/packs directory. With this automatic detection, the generator
+    registers your component on the importmap (if using importmap), and then
+    appropriately imports and registers it on the VueJs app instance on either
+    app/javascript/application.js or app/javascript/packs/application.js 
+
 Example:
     bin/rails generate matestack:vue_js_component card
 
     This will create:
         app/matestack/components/card.rb
         app/matestack/components/card.js
-    And if the registry exists, modify:
+    If the registry exists, modify:
         app/matestack/components/registry.rb
+    If on importmap, modify:
+        config/importmap.rb
+        app/javascript/application.js
+    If on webpacker, modify:
+        app/javascript/packs/application.js
 
 
     bin/rails generate matestack:component admin/dashboard/card_cell
@@ -51,8 +63,13 @@ Example:
     This will create:
         app/matestack/components/admin/dashboard/card_cell.rb
         app/matestack/components/admin/dashboard/card_cell.js
-    And if the registry exists, modify:
+    If the registry exists, modify:
         app/matestack/components/registry.rb
+    If on importmap, modify:
+        config/importmap.rb
+        app/javascript/application.js
+    If on webpacker, modify:
+        app/javascript/packs/application.js
 
 
     bin/rails generate matestack:component admin/dashboard/card --no-registry
@@ -60,3 +77,8 @@ Example:
     This will create:
         app/matestack/components/admin/dashboard/card.rb
         app/matestack/components/admin/dashboard/card.js
+    If on importmap, modify:
+        config/importmap.rb
+        app/javascript/application.js
+    If on webpacker, modify:
+        app/javascript/packs/application.js
