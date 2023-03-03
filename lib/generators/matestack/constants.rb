@@ -12,6 +12,8 @@ module Matestack
     APPLICATION_LAYOUT_DEFAULT_FILE_PATH = "#{MATESTACK_DIRECTORY}/application_layout.rb"
     APPLICATION_VUE_JS_COMPONENT_DEFAULT_FILE_PATH = COMPONENT_DIRECTORY
 
+    APP_INSTANCE_REGISTRATION = /^const appInstance = createApp\(\{\}\)\n$/
+
     TEMPLATE_FILE_TYPE = '.rb.erb'
     VUE_JS_TEMPLATE_FILE_TYPE = '.js.erb'
 

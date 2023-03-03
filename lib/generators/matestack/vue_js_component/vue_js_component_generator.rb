@@ -56,54 +56,84 @@ module Matestack
     end
 
     def register_on_package_manager
-      if File.exist?('config/importmap.rb')
-        unless File.readlines('config/importmap.rb').last.end_with?("\n")
-          File.open('config/importmap.rb', 'a') do |file|
-            file.puts
-          end
-        end
+      if importmap?
+        ensure_eof_newline_on('config/importmap.rb')
 
         append_to_file 'config/importmap.rb' do
-          <<~PIN
-            pin \"#{@vue_js_component_config[:registry_name]}\", to: \"#{@vue_js_component_config[:file_path]}\"
-          PIN
+          pin_component(
+            registry_name: @vue_js_component_config[:registry_name],
+            file_path: @vue_js_component_config[:file_path]
+          )
         end
 
-        inject_into_file 'app/javascript/application.js', before: /^const.*createApp/ do
-          <<~JS
-            import #{@vue_js_component_config[:component_name]} from '#{@vue_js_component_config[:registry_name]}'
-
-          JS
+        inject_into_file 'app/javascript/application.js', before: APP_INSTANCE_REGISTRATION do
+          pack_file_component_import(
+            component_name: @vue_js_component_config[:component_name],
+            component_path: @vue_js_component_config[:registry_name]
+          )
         end
 
-        app_instance_name = File.readlines(Rails.root + 'app/javascript/application.js').find do |l|
-          l.match?(/^const.*createApp/)
-        end.split('=').map(&:strip).first.split(' ').last
-
-        inject_into_file 'app/javascript/application.js', after: /^const.*createApp/ do
-          <<~JS
-
-            #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
-          JS
+        inject_into_file 'app/javascript/application.js', after: APP_INSTANCE_REGISTRATION do
+         pack_file_component_registration(
+          app_instance_name: app_instance_name('app/javascript/application.js'),
+          registry_name: @vue_js_component_config[:registry_name],
+          component_name: @vue_js_component_config[:component_name]
+         )
         end
-      elsif File.exist?('app/javascript/packs/application.js')
-        inject_into_file 'app/javascript/packs/application.js', before: /^const.*createApp/ do
-          <<~JS
-            import #{@vue_js_component_config[:component_name]} from '../../../#{@vue_js_component_config[:file_path]}'
-
-          JS
+      elsif webpacker?
+        inject_into_file 'app/javascript/packs/application.js', before: APP_INSTANCE_REGISTRATION do
+          pack_file_component_import(
+            component_name: @vue_js_component_config[:component_name],
+            component_path: "../../../#{@vue_js_component_config[:file_path]}"
+          )
         end
 
-        app_instance_name = File.readlines(Rails.root + 'app/javascript/packs/application.js').find do |l|
-          l.match?(/^const.*createApp/)
-        end.split('=').map(&:strip).first.split(' ').last
+        inject_into_file 'app/javascript/packs/application.js', after: APP_INSTANCE_REGISTRATION do
+          pack_file_component_registration(
+            app_instance_name: app_instance_name('app/javascript/packs/application.js'),
+            registry_name: @vue_js_component_config[:registry_name],
+            component_name: @vue_js_component_config[:component_name]
+          )
+        end
+      end
+    end
 
-        inject_into_file 'app/javascript/packs/application.js', after: /^const.*createApp/ do
-          <<~JS
+    private
 
+    def pin_component(registry_name:,
+                      file_path:)
+      "pin \"#{registry_name}\", to: \"#{file_path}\"\n"
+    end
 
-            #{app_instance_name}.component('#{@vue_js_component_config[:registry_name]}', #{@vue_js_component_config[:component_name]})
-          JS
+    def pack_file_component_import(component_name:,
+                                  component_path:)
+      "import #{component_name} from '#{component_path}'\n\n"
+    end
+
+    def pack_file_component_registration(app_instance_name:,
+                                        registry_name:,
+                                        component_name:)
+      "\n#{app_instance_name}.component('#{registry_name}', #{component_name})"
+    end
+
+    def app_instance_name(file_path)
+      @app_instance_name ||= File.readlines(Rails.root + file_path).find do |l|
+                              l.match?(/^const.*createApp/)
+                            end.split('=').map(&:strip).first.split(' ').last
+    end
+
+    def importmap?
+      File.exist?('config/importmap.rb')
+    end
+
+    def webpacker?
+      File.exist?('app/javascript/packs/application.js')
+    end
+
+    def ensure_eof_newline_on(file_path)
+      unless File.readlines(file_path).last.end_with?("\n")
+        File.open(file_path, 'a') do |file|
+          file.puts
         end
       end
     end
