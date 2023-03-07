@@ -1,0 +1,41 @@
+class <%= @ruby_component_config[:klass] %> < <%= @ruby_component_config[:base_klass] %>
+  vue_name "<%= @vue_js_component_config[:registry_name] %>"
+
+  <%- unless options[:full] -%>
+  def response
+    div do
+      render_options
+      render_errors
+    end
+  end
+
+  def vue_props
+    super.merge({
+      foo: 'bar'
+    })
+  end
+  <%- else -%>
+  # required :some_required_property
+  # optional :some_optional_property
+
+  def prepare
+  end
+
+  def render?
+    true
+  end
+
+  def response
+    div do
+      render_options
+      render_errors
+    end
+  end
+
+  def vue_props
+    super.merge({
+      foo: 'bar'
+    })
+  end
+  <%- end -%>
+end
