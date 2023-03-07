@@ -47,9 +47,9 @@ module Matestack
       if options[:registry] && File.exist?(REGISTRY_DEFAULT_FILE_PATH)
         inject_into_file 'app/matestack/components/registry.rb', after: "module Components::Registry\n" do
           <<-RUBY.gsub(/^ {12}/, '')
-              def #{@ruby_component_config[:helper_name]}(text=nil, options=nil, &block)
-                #{@ruby_component_config[:klass]}.call(text, options, &block)
-              end
+            def #{@ruby_component_config[:helper_name]}(text=nil, options=nil, &block)
+              #{@ruby_component_config[:klass]}.call(text, options, &block)
+            end
           RUBY
         end
       end
